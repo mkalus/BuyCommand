@@ -1,0 +1,7 @@
+name: BuyCommand
+main: de.beimax.buycommand.BuyCommand
+version: 1.0.0
+author: maxkalus
+description: >
+             Lets players pay for comamnds - uses Vault.
+depend: ['Vault']
