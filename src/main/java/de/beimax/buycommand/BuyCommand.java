@@ -74,6 +74,8 @@ public class BuyCommand extends JavaPlugin {
 	public void onEnable() {
 		// initialize plugin
 		log.info(this.toString() + " is loading.");	
+		
+		BuyCommand.buyCommand = this;
 
 		// configure plugin (configuration stuff)
 		configurePlugin();
@@ -105,6 +107,8 @@ public class BuyCommand extends JavaPlugin {
 
 		//save config to disk
 		this.saveConfig();
+		
+		BuyCommand.buyCommand = null;
 	}
 
 	/**
@@ -179,7 +183,7 @@ public class BuyCommand extends JavaPlugin {
 				economy = economyProvider.getProvider();
 			}
 	
-			BuyCommand.log.info("[BuyCommand] Vault hooked as economy plugin.");
+			//BuyCommand.log.info("[BuyCommand] Vault hooked as economy plugin.");
 			return (economy != null);
 		}
 		economy = null; // if the plugin is reloaded during play, possibly kill economy
@@ -198,7 +202,7 @@ public class BuyCommand extends JavaPlugin {
 	            permission = permissionProvider.getProvider();
 	        }
 	
-			BuyCommand.log.info("[BuyCommand] Vault hooked as permission plugin.");
+			//BuyCommand.log.info("[BuyCommand] Vault hooked as permission plugin.");
 	        return (permission != null);
 		}
 		permission = null; // if the plugin is reloaded during play, possibly kill permissions

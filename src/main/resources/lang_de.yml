@@ -1,0 +1,5 @@
+# Sprachdatei Deutsch (Language file German)
+errors:
+    noPermissionAtAll: 'Keine Berechtigungen für BuyCommand!'
+    permissionMissing: 'Dir fehlt die Berechtigung für das Kommando [COMMAND]. Du brauchst die Berechtigung buycommand.[COMMAND].'
+    unknownCommand: 'Unbekannter Befehl "[COMMAND]"'

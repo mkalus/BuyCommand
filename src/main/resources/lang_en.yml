@@ -1,0 +1,5 @@
+# Language file English
+errors:
+    noPermissionAtAll: 'You do not possess permissions for BuyCommand!'
+    permissionMissing: 'You do not have the permission for the command [COMMAND]. You need the permission buycommand.[COMMAND].'
+    unknownCommand: 'Unknown command "[COMMAND]"'
