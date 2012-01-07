@@ -9,9 +9,14 @@ import java.util.logging.Logger;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
+import org.bukkit.command.CommandSender;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.beimax.buycommand.listeners.BuyCommandPlayerListener;
 import de.beimax.buycommand.utils.*;
 
 /**
@@ -38,7 +43,6 @@ public class BuyCommand extends JavaPlugin {
 	 * reference to translator
 	 */
 	private static Translator lang;
-
 
 	/**
 	 * @param key of translation file
@@ -67,6 +71,37 @@ public class BuyCommand extends JavaPlugin {
 	 * reference to Vault permissions
 	 */
 	public static Permission permission = null;
+	
+	/**
+	 * reference to command processor singleton
+	 */
+	private static BuyCommandProcessor processor;
+
+	/**
+	 * get command processor
+	 * @return
+	 */
+	public static BuyCommandProcessor getProcessor() {
+		return processor;
+	}
+
+	/**
+	 * checks permission, either Vault-based or using builtin system
+	 * @param sender
+	 * @return
+	 */
+	public static boolean checkPermission(CommandSender sender, String permission) {
+		if (BuyCommand.permission != null) { // use Vault to check permissions
+			return BuyCommand.permission.has(sender, permission);
+		}
+		// fallback to default Bukkit permission checking system
+		return sender.hasPermission(permission) || sender.hasPermission("buycommand.*");
+	}
+
+	/**
+	 * reference to player listener
+	 */
+	private BuyCommandPlayerListener playerListener;
 
 	/* (non-Javadoc)
 	 * @see org.bukkit.plugin.Plugin#onEnable()
@@ -86,7 +121,7 @@ public class BuyCommand extends JavaPlugin {
 		// register vault stuff
 		boolean economySetup = setupEconomy();
 		if (economySetup == false) {
-			this.setEnabled(false);
+			getServer().getPluginManager().disablePlugin(this);
 			return; // do not setup anything more
 		}
 		setupPermission();
@@ -124,9 +159,9 @@ public class BuyCommand extends JavaPlugin {
 		configHelper.updateSampleConfig();
 		// update language files
 		configHelper.updateLanguageFiles();
-		
-		// initialize the translator
-		BuyCommand.lang = new Translator(this, this.getConfig().getString("language", "en"));
+
+		// call loader for classes
+		this.afterConfigLoad();
 	}
 
 	/**
@@ -135,12 +170,22 @@ public class BuyCommand extends JavaPlugin {
 	public void reloadBuyCommandConfiguration() {
 		// reload the config file
 		this.reloadConfig();
-
-		// re-initialize the translator
-		BuyCommand.lang = new Translator(this, this.getConfig().getString("language", "en"));
+		
+		// call reloader for classes
+		this.afterConfigLoad();
 	}
 
+	/**
+	 * loaded after config loading (used by configurePlugin and reloadBuyCommandConfiguration)
+	 */
+	protected void afterConfigLoad() {
+		// (re-)initialize the translator
+		BuyCommand.lang = new Translator(this, this.getConfig().getString("language", "en"));
 
+		// (re-)configure command processor
+		BuyCommand.processor = new BuyCommandProcessor();		
+	}
+	
 	/**
 	 * Check for updates
 	 */
@@ -167,7 +212,14 @@ public class BuyCommand extends JavaPlugin {
 	 * Configure event listeners
 	 */
 	protected void registerEvents() {
-		//TODO
+		// instanciate listeners
+		playerListener = new BuyCommandPlayerListener();
+		
+		// Register events
+		PluginManager pm = getServer().getPluginManager();
+		
+		pm.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
+		pm.registerEvent(Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Lowest, this);
 	}
 
 	/**

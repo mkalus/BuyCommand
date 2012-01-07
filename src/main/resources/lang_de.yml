@@ -3,3 +3,10 @@ errors:
     noPermissionAtAll: 'Keine Berechtigungen für BuyCommand!'
     permissionMissing: 'Dir fehlt die Berechtigung für das Kommando [COMMAND]. Du brauchst die Berechtigung buycommand.[COMMAND].'
     unknownCommand: 'Unbekannter Befehl "[COMMAND]"'
+    noAccount: 'Du besitzt kein Bankkonto und kannst deshalb den Befehl nicht ausführen!'
+    insufficientFunds: 'Das Ausführen des Befehls kostet [AMOUNT]. Du hast jedoch nur [BANK].'
+feedback:
+    update: 'BuyCommand [OLDVERSION] bitte auf Version [NEWVERSION] updaten.'
+    pay: 'Für das Ausführen des Kommandos wurden dir [AMOUNT] gutgeschrieben.'
+    withdraw: 'Für das Ausführen des Kommandos hast du [AMOUNT] bezahlt.'
+

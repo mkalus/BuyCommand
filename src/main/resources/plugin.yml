@@ -3,10 +3,13 @@ main: de.beimax.buycommand.BuyCommand
 version: 1.0.0
 author: maxkalus
 description: >
-             Lets players pay for comamnds - uses Vault.
+             Lets players pay for commands - uses Vault.
 depend: ['Vault']
 
 permissions:
-  buycommand.admin:
-    description: Admin commands
+  buycommand.updatenotify:
+    description: Members of this group are notified about file updates
     default: op
+  buycommand.free:
+    description: Members of this group are not charged for their commands
+    default: false

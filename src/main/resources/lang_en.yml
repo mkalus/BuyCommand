@@ -3,3 +3,10 @@ errors:
     noPermissionAtAll: 'You do not possess permissions for BuyCommand!'
     permissionMissing: 'You do not have the permission for the command [COMMAND]. You need the permission buycommand.[COMMAND].'
     unknownCommand: 'Unknown command "[COMMAND]"'
+    noAccount: 'You cannot execute this command, because you do not possess a bank account!'
+    insufficientFunds: 'Executing this command costs [AMOUNT]. You only have [BANK].'
+feedback:
+    update: 'Please update BuyCommand [OLDVERSION] to [NEWVERSION].'
+    pay: 'You have been credited [AMOUNT] for executing the last command.'
+    withdraw: 'You have paid [AMOUNT] for executing the last command.'
+    
