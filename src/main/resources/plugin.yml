@@ -5,3 +5,8 @@ author: maxkalus
 description: >
              Lets players pay for comamnds - uses Vault.
 depend: ['Vault']
+
+permissions:
+  buycommand.admin:
+    description: Admin commands
+    default: op
