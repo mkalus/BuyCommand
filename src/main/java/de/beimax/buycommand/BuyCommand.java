@@ -191,17 +191,22 @@ public class BuyCommand extends JavaPlugin {
 	 */
 	protected void checkForUpdate() {
 		// create update checker
-		UpdateChecker checker = new UpdateChecker();
+		final UpdateChecker checker = new UpdateChecker();
 		
 		// possibly check for updates in the internet on startup
 		if (this.getConfig().getBoolean("settings.updateNotificationOnStart", true)) {
-			try {
-				String newVersion = checker.checkForUpdate(this.getDescription().getVersion());
-				if (newVersion != null)
-					log.info("[BuyCommand] Update found for BuyCommand - please go to http://dev.bukkit.org/server-mods/buycommand/ to download version " + newVersion + "!");
-			} catch (Exception e) {
-				log.warning("[BuyCommand] Could not connect to remote server to check for update. Exception said: " + e.getMessage());
-			}
+			(new Thread() { // create a new anonymous thread that will check the version asyncronously
+				@Override
+				public void run() {
+					try {
+						String newVersion = checker.checkForUpdate(BuyCommand.buyCommand.getDescription().getVersion());
+						if (newVersion != null)
+							log.info("[BuyCommand] Update found for BuyCommand - please go to http://dev.bukkit.org/server-mods/buycommand/ to download version " + newVersion + "!");
+					} catch (Exception e) {
+						log.warning("[BuyCommand] Could not connect to remote server to check for update. Exception said: " + e.getMessage());
+					}
+				}
+			}).start();
 		}
 		
 		// also check for updates in the configuration files and update them, if needed
