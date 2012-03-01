@@ -10,8 +10,6 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -223,8 +221,8 @@ public class BuyCommand extends JavaPlugin {
 		// Register events
 		PluginManager pm = getServer().getPluginManager();
 		
-		pm.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
-		pm.registerEvent(Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Lowest, this);
+		// add listener for other plugins
+		pm.registerEvents(playerListener, this);
 	}
 
 	/**

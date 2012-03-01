@@ -1,6 +1,6 @@
 name: BuyCommand
 main: de.beimax.buycommand.BuyCommand
-version: 1.0.0
+version: 1.0.1
 author: maxkalus
 description: >
              Lets players pay for commands - uses Vault.

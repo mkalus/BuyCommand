@@ -4,9 +4,10 @@
 package de.beimax.buycommand.listeners;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerListener;
 
 import de.beimax.buycommand.BuyCommand;
 import de.beimax.buycommand.utils.UpdateChecker;
@@ -15,11 +16,12 @@ import de.beimax.buycommand.utils.UpdateChecker;
  * @author mkalus
  * Listens to player events
  */
-public class BuyCommandPlayerListener extends PlayerListener {
-	/* (non-Javadoc)
-	 * @see org.bukkit.event.player.PlayerListener#onPlayerJoin(org.bukkit.event.player.PlayerJoinEvent)
+public class BuyCommandPlayerListener implements Listener {
+	/**
+	 * Check updates
+	 * @param event
 	 */
-	@Override
+	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		// update checker activated
 		if (BuyCommand.getPlugin().getConfig().getBoolean("settings.updateNotificationOnLogin", true)) {
@@ -46,11 +48,11 @@ public class BuyCommandPlayerListener extends PlayerListener {
 		}
 	}
 
-
-	/* (non-Javadoc)
-	 * @see org.bukkit.event.player.PlayerListener#onPlayerCommandPreprocess(org.bukkit.event.player.PlayerCommandPreprocessEvent)
+	/**
+	 * preprocess commands
+	 * @param event
 	 */
-	@Override
+	@EventHandler
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
 		// let the processor do all the work
 		BuyCommand.getProcessor().processCommand(event);
