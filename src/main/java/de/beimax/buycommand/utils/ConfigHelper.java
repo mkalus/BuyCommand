@@ -23,7 +23,7 @@ public class ConfigHelper {
 	/**
 	 * available languages
 	 */
-	public final static String[] languagesAvailable = {"en", "de"};
+	public final static String[] languagesAvailable = {"en", "de", "pl"};
 
 	/**
 	 * Check for the existence of sample_config.yml in the plugin folder and copy it if it is newer/changed
